@@ -218,8 +218,8 @@ circom circuits/vote.circom --r1cs --wasm --sym -o build
 
 ```json
 {
-  "voter_key": "123456",
-  "vote": "1"
+  "voter_key": 123,
+  "vote": 1
 }
 ```
 
