@@ -1,7 +1,9 @@
 # ZK Playground: Universal zk-SNARK Verifier (Frontend)
 
  browser-based verifier for zk-SNARK circuits using Circom and SnarkJS, supports verification of multiple circuit types and allows both local and uploaded file usage.
-## Trusted Setup & Prove generation
+## Trusted Setup & Prove generation (Auto)
+Just use the scripts file to run all instructions you need to compile and build your file
+## Trusted Setup & Prove generation (MANUALE)
 ### Compiling:
 First of all you need to compile the circuits to obtain a vaild verficiation file 
 `circom circuits/{circuit_name}.circom --r1cs --wasm --sym -o build` -> you need to add 'build' folder in addition , to build circ's alter files in
