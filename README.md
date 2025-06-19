@@ -5,12 +5,16 @@
 ### Compiling:
 First of all you need to compile the circuits to obtain a vaild verficiation file 
 `circom circuits/{circuit_name}.circom --r1cs --wasm --sym -o build` -> you need to add 'build' folder in addition , to build circ's alter files in
+By running this instruction we will get these files:
+- `r1sc` General format of circuits constraint system
+- `wasm` witness file
+- `sym` symbols of debug
 ### Power Of Tau:
-To generate trusted setup you need first to generate a vaild ptau file which is a universal structured reference string (SRS), allows you to go across many circuits at the same verfication process , ptau or power of tau file , gained this name cause of the usage of exponentiated powers of a random secret value `τ` -> `[1, τ, τ², τ³, ..., τⁿ]` {this sequence used in eliptic curve pairings for proving and verfying}
+To generate trusted setup you need first to generate a vaild ptau file which is a universal structured reference string (SRS), allows zksnark proof generation for many circuits using the same elliptic curve parameters , ptau or power of tau file , gained this name because it encodes a secret  `τ` and its powers -> `[1, τ, τ², τ³, ..., τⁿ]` {this sequence used in eliptic curve pairings for proving and verfying}
 So to Generate the phase 1 of the trusted setup you need to get this ptau file either local file trusted by your machine only or general one from any popular domain (these kind of ptau files trusted by all browsers via vaild browser certifcation number ) , so in our case we will use local ptau file generated locally
 `snarkjs powersoftau new bn128 12 pot12_0000.pta`
 
-So by this we've already generate phase one ptau file but not fully , to get fully phase 1 we need to excute:
+So by this we've already generate phase one ptau file but not fully , to contribute randomness, complete Phase 1 securely we need to:
 
 `snarkjs powersoftau contribute pot12_0000.ptau powersOfTau28_hez_final_10.ptau --name="First Contribution" -v`
 
@@ -29,12 +33,20 @@ then run
 ### Proving 
 To prove the input and gain the final result you have to use 
 `snarkjs groth16 prove build/vote_setup.zkey build/vote.wtns vote_proof.json vote_public.json`
-### TUI - CLI 
+This will generate:
+- `vote_proof.json` zk proof data
+- `vote_public.json` public  signals need to verify
+### CLI(TUI) 
 To verfiy the input in terminal, cmd you could easily 
 `snarkjs groth16 verify vote_verification_key.json vote_public.json vote_proof.json`
 ### Front End Usage
 To check in browser you have to export the zkey file first by
 `snarkjs zkey export verificationkey build/vote_setup.zkey vote_verification_key.json`
+Using snarkjs.groth16.verfy( ) in browser (snarkJs) with these files:
+- `vote_verification_key.json`
+- `vote_proof.json`
+- `vote_public.json`
+So this enables real time proof verfication in front end. (USED VOTE CIRCUIT AS EXAMPLE)
 Educational Version Only.
 ## Supported Circuits
 
