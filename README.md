@@ -48,14 +48,6 @@ If invalid, you'll see an error message and failure details.
 
 ---
 
-## Extending
-
-You can add more circuits by:
-- Placing their proof/public/vkey files with the same naming format
-- Adding an option to the dropdown in `index.html`
-- Modifying the UI logic if needed to add pre-validation or custom behavior
-
----
 
 ## In-Browser Proof Generation
 
