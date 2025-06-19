@@ -67,8 +67,7 @@ Educational Version Only.
 
 ---
 
-## How to Use
-
+## Additional Usage
 1. Place the frontend files into a directory with your circuit outputs.
 2. Ensure these files are present for each circuit you want to verify:
     - `{circuit}_proof.json`
