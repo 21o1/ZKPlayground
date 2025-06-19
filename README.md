@@ -1,6 +1,6 @@
 # ZK Playground: Universal zk-SNARK Verifier (Frontend)
 
-This project is a fully-featured browser-based verifier for zk-SNARK circuits using Circom and SnarkJS. It supports verification of multiple circuit types and allows both local and uploaded file usage.
+ browser-based verifier for zk-SNARK circuits using Circom and SnarkJS, supports verification of multiple circuit types and allows both local and uploaded file usage.
 
 ## Supported Circuits
 
