@@ -10,13 +10,17 @@ To generate trusted setup you need first to generate a vaild ptau file which is 
 So to Generate the phase 1 of the trusted setup you need to get this ptau file either local file trusted by your machine only or general one from any popular domain (these kind of ptau files trusted by all browsers via vaild browser certifcation number ) , so in our case we will use local ptau file generated locally
 `snarkjs powersoftau new bn128 12 pot12_0000.pta`
 
-So by this we've already generate phase one ptau file and to get final powered phase we must use:
+So by this we've already generate phase one ptau file but not fully , to get fully phase 1 we need to excute:
 
 `snarkjs powersoftau contribute pot12_0000.ptau powersOfTau28_hez_final_10.ptau --name="First Contribution" -v`
+
 ### Final Set-up And Key Generation
-Now we are ready to get our final trusted setup (groth16 func's) And Generate circuit key 
+Now we are ready to get our final trusted setup (circuit-specific Setup, Groth16 Phase 2) And Generate circuit key 
 `snarkjs groth16 setup build/vote.r1cs powersOfTau28_hez_final_10.ptau build/vote_setup.zkey` 
 By Running this command we will setup our TSU and Generate the zk verfication key for our circuit (im using vote circuit key as example)
+### Witness Generation
+We need to creat witness file '.wtns' from circuit and input , this file will contain  the vars and intermediate signals and output of our input file and circuit so by it we could prove that the circuit computed correctly without reveling to the real instruction and check the input vars, so it done by this instruction:
+`node build/vote_js/generate_witness.js build/vote_js/vote.wasm input.json build/vote.wtns`
 ### In Case Of Any Errors 
 If you faced this kind of errors `[ERROR] snarkJS: Powers of tau is not prepared.` , In this case you need to prepare the PTAU file before the phase to and this could be done by
 `snarkjs powersoftau prepare phase2 powersOfTau28_hez_final_10.ptau powersOfTau28_hez_final_10_prepared.ptau`
