@@ -1,7 +1,35 @@
 # ZK Playground: Universal zk-SNARK Verifier (Frontend)
 
  browser-based verifier for zk-SNARK circuits using Circom and SnarkJS, supports verification of multiple circuit types and allows both local and uploaded file usage.
-
+## Trusted Setup & Prove generation
+### Compiling:
+First of all you need to compile the circuits to obtain a vaild verficiation file 
+`circom circuits/{circuit_name}.circom --r1cs --wasm --sym -o build` -> you need to add 'build' folder in addition , to build circ's alter files in
+### Power Of Tau:
+To generate trusted setup you need first to generate a vaild ptau file which is a universal structured reference string (SRS), allows you to go across many circuits at the same verfication process , ptau or power of tau file , gained this name cause of the usage of exponentiated powers of a random secret value `τ` -> `[1, τ, τ², τ³, ..., τⁿ]` {this sequence used in eliptic curve pairings for proving and verfying}
+So to Generate the phase 1 of the trusted setup you need to get this ptau file either local file trusted by your machine only or general one from any popular domain (these kind of ptau files trusted by all browsers via vaild browser certifcation number ) , so in our case we will use local ptau file generated locally
+`snarkjs powersoftau new bn128 12 pot12_0000.pta`
+So by this we've already generate phase one ptau file and to get final powered phase we must use:
+`snarkjs powersoftau contribute pot12_0000.ptau powersOfTau28_hez_final_10.ptau --name="First Contribution" -v`
+### Final Set-up And Key Generation
+Now we are ready to get our final trusted setup (groth16 func's) And Generate circuit key 
+`snarkjs groth16 setup build/vote.r1cs powersOfTau28_hez_final_10.ptau build/vote_setup.zkey` 
+By Running this command we will setup our TSU and Generate the zk verfication key for our circuit (im using vote circuit key as example)
+### In Case Of Any Errors 
+If you faced this kind of errors `[ERROR] snarkJS: Powers of tau is not prepared.` , In this case you need to prepare the PTAU file before the phase to and this could be done by
+`snarkjs powersoftau prepare phase2 powersOfTau28_hez_final_10.ptau powersOfTau28_hez_final_10_prepared.ptau`
+then run 
+`snarkjs groth16 setup build/vote.r1cs powersOfTau28_hez_final_10.ptau build/vote_setup.zkey`
+### Proving 
+To prove the input and gain the final result you have to use 
+`snarkjs groth16 prove build/vote_setup.zkey build/vote.wtns vote_proof.json vote_public.json`
+### TUI - CLI 
+To verfiy the input in terminal, cmd you could easily 
+`snarkjs groth16 verify vote_verification_key.json vote_public.json vote_proof.json`
+### Front End Usage
+To check in browser you have to export the zkey file first by
+`snarkjs zkey export verificationkey build/vote_setup.zkey vote_verification_key.json`
+Educational Version Only.
 ## Supported Circuits
 
 - `vote.circom`: verify a binary vote (0 or 1)
