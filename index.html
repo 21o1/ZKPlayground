@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZK Playground - Full Verifier</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; background: #f8f8f8; }
+    h1 { color: #222; }
+    #container { background: white; padding: 2em; border-radius: 10px; max-width: 800px; margin: auto; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    select, input, button, textarea { padding: 0.6em; font-size: 1em; margin: 0.5em 0; width: 100%; box-sizing: border-box; }
+    pre { background: #f4f4f4; padding: 1em; border-radius: 5px; }
+    .success { color: green; font-weight: bold; }
+    .error { color: red; font-weight: bold; }
+    .file-input { display: none; }
+    label.upload-label { display: block; margin-top: 0.5em; padding: 0.6em; background-color: #eee; cursor: pointer; border-radius: 4px; text-align: center; }
+    .description { font-size: 0.9em; color: #555; margin-bottom: 1em; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Universal zk-SNARK Circuit Verifier</h1>
+    <p class="description">
+      This interface allows you to verify zk-SNARK proofs from different circuits including voting, multiplication, identity checks, and SHA256 hash preimage.
+      You may upload your own generated proof files or rely on local circuit-specific defaults.
+    </p>
+
+    <label for="circuitSelect">Select circuit to verify:</label>
+    <select id="circuitSelect">
+      <option value="vote">Vote</option>
+      <option value="multiplier">Multiplier</option>
+      <option value="ownership">Ownership</option>
+      <option value="hash_preimage">Hash Preimage</option>
+    </select>
+
+    <label for="userInput">(Optional) Enter human-readable public input summary:</label>
+    <textarea id="userInput" placeholder="e.g., vote: 1, a: 3, b: 4, owner: 42" rows="2"></textarea>
+
+    <label for="vkeyFile" class="upload-label">Upload Verification Key (JSON)</label>
+    <input type="file" id="vkeyFile" class="file-input" accept=".json" />
+
+    <label for="proofFile" class="upload-label">Upload Proof File (JSON)</label>
+    <input type="file" id="proofFile" class="file-input" accept=".json" />
+
+    <label for="publicFile" class="upload-label">Upload Public Input File (JSON)</label>
+    <input type="file" id="publicFile" class="file-input" accept=".json" />
+
+    <button onclick="runProof()">Verify Proof</button>
+    <pre id="output">Awaiting input and files...</pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/snarkjs@latest/build/snarkjs.min.js"></script>
+  <script src="verifier.js"></script>
+</body>
+</html>

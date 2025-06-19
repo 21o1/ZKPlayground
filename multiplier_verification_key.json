@@ -1,0 +1,9 @@
+{
+  "protocol": "groth16",
+  "curve": "bn128",
+  "vk_alpha_1": [],
+  "vk_beta_2": [
+    [],
+    []
+  ]
+}
