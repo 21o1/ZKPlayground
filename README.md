@@ -49,11 +49,4 @@ If invalid, you'll see an error message and failure details.
 ---
 
 
-## In-Browser Proof Generation
-
-This verifier is built for **verification only**, but it can be extended to:
-- Load circuit `.wasm` and `.zkey` files
-- Accept input.json via UI
-- Generate the witness and proof client-side
-
 
