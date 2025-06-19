@@ -10,15 +10,15 @@ async function runProof() {
     const verified = await snarkjs.groth16.verify(vkey, publicSignals, proof);
 
     if (verified) {
-      output.textContent = `✅ Proof is valid for circuit: ${circuit}\nPublic Inputs: ${JSON.stringify(publicSignals)}`;
+      output.textContent = ` Proof is valid for circuit: ${circuit}\nPublic Inputs: ${JSON.stringify(publicSignals)}`;
       output.className = "success";
     } else {
-      output.textContent = `❌ Proof is invalid for circuit: ${circuit}`;
+      output.textContent = ` Proof is invalid for circuit: ${circuit}`;
       output.className = "error";
     }
   } catch (e) {
     console.error(e);
-    output.textContent = "❌ Error loading files or verifying proof. Please ensure correct JSON structure and matching files.";
+    output.textContent = " Error loading files or verifying proof. Please ensure correct JSON structure and matching files.";
     output.className = "error";
   }
 }
