@@ -56,10 +56,4 @@ This verifier is built for **verification only**, but it can be extended to:
 - Accept input.json via UI
 - Generate the witness and proof client-side
 
-Let us know if you'd like that bundled next.
 
----
-
-## License
-
-MIT — use freely for educational, experimental, and production purposes.
