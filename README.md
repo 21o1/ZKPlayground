@@ -8,6 +8,7 @@ First of all you need to compile the circuits to obtain a vaild verficiation fil
 ### Power Of Tau:
 To generate trusted setup you need first to generate a vaild ptau file which is a universal structured reference string (SRS), allows you to go across many circuits at the same verfication process , ptau or power of tau file , gained this name cause of the usage of exponentiated powers of a random secret value `τ` -> `[1, τ, τ², τ³, ..., τⁿ]` {this sequence used in eliptic curve pairings for proving and verfying}
 So to Generate the phase 1 of the trusted setup you need to get this ptau file either local file trusted by your machine only or general one from any popular domain (these kind of ptau files trusted by all browsers via vaild browser certifcation number ) , so in our case we will use local ptau file generated locally
+
 `snarkjs powersoftau new bn128 12 pot12_0000.pta`
 So by this we've already generate phase one ptau file and to get final powered phase we must use:
 `snarkjs powersoftau contribute pot12_0000.ptau powersOfTau28_hez_final_10.ptau --name="First Contribution" -v`
