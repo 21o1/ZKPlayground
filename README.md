@@ -6,13 +6,13 @@
 First of all you need to compile the circuits to obtain a vaild verficiation file 
 `circom circuits/{circuit_name}.circom --r1cs --wasm --sym -o build` -> you need to add 'build' folder in addition , to build circ's alter files in
 By running this instruction we will get these files:
-- `r1sc` General format of circuits constraint system
-- `wasm` witness file
+- `r1sc` General format of the circuit's constraint system
+- `wasm` compiled circuit in WebAssembly format (used to generate the witness)
 - `sym` symbols of debug
 ### Power Of Tau:
 To generate trusted setup you need first to generate a vaild ptau file which is a universal structured reference string (SRS), allows zksnark proof generation for many circuits using the same elliptic curve parameters , ptau or power of tau file , gained this name because it encodes a secret  `τ` and its powers -> `[1, τ, τ², τ³, ..., τⁿ]` {this sequence used in eliptic curve pairings for proving and verfying}
-So to Generate the phase 1 of the trusted setup you need to get this ptau file either local file trusted by your machine only or general one from any popular domain (these kind of ptau files trusted by all browsers via vaild browser certifcation number ) , so in our case we will use local ptau file generated locally
-`snarkjs powersoftau new bn128 12 pot12_0000.pta`
+So to Generate the phase 1 of the trusted setup you need to get this ptau file either local file trusted by your machine only or general one from any popular domain (they’re trusted because of public ceremonies and transparency ) , so in our case we will use local ptau file generated locally
+`snarkjs powersoftau new bn128 12 pot12_0000.ptau`
 
 So by this we've already generate phase one ptau file but not fully , to contribute randomness, complete Phase 1 securely we need to:
 
@@ -21,9 +21,9 @@ So by this we've already generate phase one ptau file but not fully , to contrib
 ### Final Set-up And Key Generation
 Now we are ready to get our final trusted setup (circuit-specific Setup, Groth16 Phase 2) And Generate circuit key 
 `snarkjs groth16 setup build/vote.r1cs powersOfTau28_hez_final_10.ptau build/vote_setup.zkey` 
-By Running this command we will setup our TSU and Generate the zk verfication key for our circuit (im using vote circuit key as example)
+By Running this command we will setup  TSU (Trusted SetUp) and Generate the zksnarks proving key for our circuit (im using vote circuit key as example)
 ### Witness Generation
-We need to creat witness file '.wtns' from circuit and input , this file will contain  the vars and intermediate signals and output of our input file and circuit so by it we could prove that the circuit computed correctly without reveling to the real instruction and check the input vars, so it done by this instruction:
+We need to creat witness file '.wtns' from circuit and input , this file will contain  the vars and intermediate signals and output of our input file and circuit so by it we could prove that the circuit computed correctly without revealing the computation logic or the actual private inputs, so it done by this instruction:
 `node build/vote_js/generate_witness.js build/vote_js/vote.wasm input.json build/vote.wtns`
 ### In Case Of Any Errors 
 If you faced this kind of errors `[ERROR] snarkJS: Powers of tau is not prepared.` , In this case you need to prepare the PTAU file before the phase to and this could be done by
